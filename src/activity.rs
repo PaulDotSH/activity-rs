@@ -45,7 +45,7 @@ pub enum ActivityType {
 
 impl Activity<'_> {
     pub fn add_team_score(&mut self) {
-        self.teams[self.turn].score += self.score;
+        self.teams[self.turn as usize].score += self.score;
         self.score = 0
     }
 
@@ -136,6 +136,7 @@ impl Activity<'_> {
             mime_word_index: 0,
             turn: 0,
             teams,
+            score: 0,
         }
     }
 }
