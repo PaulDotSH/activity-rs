@@ -109,11 +109,15 @@ impl Activity<'_> {
         Ok(self.teams.push(Team::new(0)))
     }
 
+    // TODO: Benchmark how fast it is with a parallel iterator vs with sequential
+
     pub fn new<'a>(describe: &'a str, mime: &'a str, draw: &'a str, team_size: u8) -> Activity<'a> {
         // Returns indexes for each word
         fn parse(s: &str) -> Vec<u32> {
             (0..1).chain(s.match_indices(',').map(|x| x.0 as u32)).collect()
         }
+
+        // TODO: Check if we cal do a parallel shuffle and benchmark that, also we should be able to sshuffle all the indexes in parallel and join on that
 
         let mut describe_indexes = parse(describe);
         describe_indexes.shuffle(&mut thread_rng());
